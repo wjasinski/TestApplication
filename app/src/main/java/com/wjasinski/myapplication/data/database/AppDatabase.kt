@@ -5,4 +5,6 @@ import android.arch.persistence.room.RoomDatabase
 import com.wjasinski.myapplication.model.Recipe
 
 @Database(entities = arrayOf(Recipe::class), version = 1)
-abstract class AppDatabase : RoomDatabase()
+abstract class AppDatabase : RoomDatabase() {
+    abstract val recipesDao : RecipesDao
+}

@@ -7,8 +7,11 @@ import com.wjasinski.myapplication.di.DaggerAppComponent
 import dagger.android.HasActivityInjector
 
 class MyApp : Application() {
+    lateinit var appComponent: AppComponent
+
     override fun onCreate() {
         super.onCreate()
-        DaggerAppComponent.builder().appModule(AppModule(this)).build().inject(this)
+        appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
+        appComponent.inject(this)
     }
 }

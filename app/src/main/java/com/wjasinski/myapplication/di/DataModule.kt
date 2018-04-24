@@ -1,9 +1,11 @@
 package com.wjasinski.myapplication.di
 
 import android.arch.persistence.room.Room
+import android.content.Context
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonSerializationContext
 import com.google.gson.reflect.TypeToken
 import com.wjasinski.myapplication.MyApp
 import com.wjasinski.myapplication.data.database.AppDatabase
@@ -88,8 +90,8 @@ public class DataModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(app : MyApp): AppDatabase =
-            Room.databaseBuilder(app.applicationContext, AppDatabase::class.java, DATABASE_NAME).build()
+    fun provideDatabase(context: Context): AppDatabase =
+            Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).build()
 
     @Provides
     @Singleton
