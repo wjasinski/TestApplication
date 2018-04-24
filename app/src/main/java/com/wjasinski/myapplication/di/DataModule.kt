@@ -7,6 +7,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.wjasinski.myapplication.data.net.RestApi
 import com.wjasinski.myapplication.data.net.RestService
+import com.wjasinski.myapplication.model.Receip
+import com.wjasinski.myapplication.model.ReceipDeserializer
 import dagger.Module
 import dagger.Provides
 import java.io.File
@@ -34,6 +36,7 @@ public class DataModule {
     fun provideGson(): Gson {
         return GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .registerTypeAdapter(object : TypeToken<MutableList<Receip>>() {}.type, ReceipDeserializer())
                 .create()
     }
 

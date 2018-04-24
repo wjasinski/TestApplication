@@ -1,14 +1,16 @@
 package com.wjasinski.myapplication
 
-import android.support.v7.app.AppCompatActivity
+import android.databinding.ObservableArrayList
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.wjasinski.myapplication.data.net.RestService
-import com.wjasinski.myapplication.di.AppComponent
-import com.wjasinski.myapplication.di.AppModule
 import com.wjasinski.myapplication.di.DaggerAppComponent
-import io.reactivex.Scheduler
+import com.wjasinski.myapplication.model.Receip
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import android.databinding.ObservableList
+import android.util.Log
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,8 +21,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var receips : ObservableList<Receip> = ObservableArrayList<Receip>()
+
         DaggerAppComponent.create().inject(this)
 
-        restService.getReceipes().subscribeOn(Schedulers.newThread()).subscribe()
+        restService.getReceipes().subscribeOn(Schedulers.newThread()).subscribeBy { receips.addAll(it)
+            Log.d("TAG", receips.toString())
+        }
+
     }
 }
