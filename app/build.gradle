@@ -1,0 +1,62 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.wjasinski.myapplication"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    def dependency = rootProject.ext.dependencies
+
+    implementation dependency.supportV4
+    implementation dependency.supportDesign
+    implementation dependency.supportCompatV7
+    implementation dependency.customTabs
+
+    implementation dependency.archComponentsExtensions
+    kapt dependency.archComponentsCompiler
+
+    implementation dependency.dagger
+    kapt dependency.daggerCompiler
+    implementation dependency.daggerAndroidSupport
+    kapt dependency.daggerAndroidProcessor
+
+    kapt dependency.dataBindingCompiler
+
+    implementation dependency.rxJava
+    implementation dependency.rxRelay
+    implementation dependency.rxAndroid
+    implementation dependency.rxKotlin
+    implementation dependency.rxBindingKotlin
+    implementation dependency.rxPermissions
+
+    implementation dependency.constraintLayout
+    implementation dependency.materialDialogs
+
+    api dependency.retrofit
+    api dependency.retrofitGson
+    api dependency.retrofitRx
+    api dependency.okhttp
+    api dependency.okhttpLogging
+
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
