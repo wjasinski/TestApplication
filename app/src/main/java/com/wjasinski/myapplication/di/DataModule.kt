@@ -1,9 +1,12 @@
 package com.wjasinski.myapplication.di
 
+import android.arch.persistence.room.Room
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.wjasinski.myapplication.MyApp
+import com.wjasinski.myapplication.data.database.AppDatabase
 import com.wjasinski.myapplication.data.net.RestApi
 import com.wjasinski.myapplication.data.net.RestService
 import com.wjasinski.myapplication.model.Recipe
@@ -25,6 +28,7 @@ public class DataModule {
     companion object {
         const val API_URL_KEY = "apiUrl"
         const val API_URL_VALUE = "https://www.godt.no/api/"
+        const val DATABASE_NAME = "recipes.db"
     }
 
     @Provides
@@ -81,6 +85,11 @@ public class DataModule {
     @Singleton
     fun provideRestService(restApi: RestApi): RestService =
             RestService(restApi)
+
+    @Singleton
+    @Provides
+    fun provideDatabase(app : MyApp): AppDatabase =
+            Room.databaseBuilder(app.applicationContext, AppDatabase::class.java, DATABASE_NAME).build()
 
     @Provides
     @Singleton

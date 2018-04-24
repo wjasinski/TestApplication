@@ -21,26 +21,32 @@ class RecipeDeserializer : JsonDeserializer<List<Recipe>> {
         val mainArray = json.asJsonArray
 
         for (receipObject in mainArray) {
-            val receip = Recipe(title = receipObject.asJsonObject.get(TITLE).asString,
+            val recipe = Recipe(title = receipObject.asJsonObject.get(TITLE).asString,
             description = receipObject.asJsonObject.get(DESCRIPTION).asString.replace("<br />", ""),
             imageUrl = parseImgUrl(receipObject.asJsonObject.get(IMAGES)),
             ingredientsNames = parseIngredientsNames(receipObject.asJsonObject.get(INGREDIENTS)))
-            list.add(receip)
+            list.add(recipe)
         }
 
         return list
     }
 
-    private fun parseIngredientsNames(jsonElement: JsonElement): List<String> {
-        val list = mutableListOf<String>()
-
+    private fun parseIngredientsNames(jsonElement: JsonElement): String {
+        val stringBuilder = StringBuilder()
         val ingredientsArray = jsonElement.asJsonArray
 
-        for (ingredient in ingredientsArray) {
-            list.add(ingredient.asJsonObject.get(INGREDIENT_NAME).asString)
-        }
+        stringBuilder.append("Ingredients: ")//TODO move to strings
 
-        return list
+        for (ingredient in ingredientsArray) {
+            val string = ingredient.asJsonObject.get(INGREDIENT_NAME).asString
+            if(!string.isNullOrEmpty()) {
+                stringBuilder.append(string)
+                stringBuilder.append(", ")
+            }
+        }
+        stringBuilder.setLength(Math.max(stringBuilder.length - 2, 0)) //removing last ","
+
+        return stringBuilder.toString()
     }
 
     private fun parseImgUrl(jsonElement: JsonElement): String {

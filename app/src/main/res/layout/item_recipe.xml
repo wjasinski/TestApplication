@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_receip_image"
             android:layout_below="@+id/tv_title"
-            android:text="@{receip.getIngredientsAsString()}"
+            android:text="@{receip.ingredientsNames}"
             android:textSize="12sp"
             android:layout_marginTop="3dp"
             android:layout_marginLeft="8dp"

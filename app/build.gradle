@@ -53,7 +53,7 @@ dependencies {
     implementation dependency.rxPermissions
 
     implementation dependency.constraintLayout
-    implementation dependency.materialDialogs
+    implementation dependency.picasso
 
     api dependency.retrofit
     api dependency.retrofitGson
@@ -61,7 +61,10 @@ dependencies {
     api dependency.okhttp
     api dependency.okhttpLogging
 
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    api dependency.room
+    api dependency.roomRxjava2
+    kapt dependency.roomCompiler
+
 
 //    testImplementation 'junit:junit:4.12'
 //    androidTestImplementation 'com.android.support.test:runner:1.0.1'
