@@ -1,27 +1,23 @@
 package com.wjasinski.myapplication.di
 
-import android.content.Context
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.wjasinski.myapplication.data.net.RestApi
 import com.wjasinski.myapplication.data.net.RestService
-import com.wjasinski.myapplication.model.Receip
-import com.wjasinski.myapplication.model.ReceipDeserializer
+import com.wjasinski.myapplication.model.Recipe
+import com.wjasinski.myapplication.model.RecipeDeserializer
 import dagger.Module
 import dagger.Provides
-import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
 @Module
 public class DataModule {
@@ -36,7 +32,7 @@ public class DataModule {
     fun provideGson(): Gson {
         return GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .registerTypeAdapter(object : TypeToken<MutableList<Receip>>() {}.type, ReceipDeserializer())
+                .registerTypeAdapter(object : TypeToken<MutableList<Recipe>>() {}.type, RecipeDeserializer())
                 .create()
     }
 

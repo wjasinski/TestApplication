@@ -6,7 +6,7 @@
     <data>
         <variable
             name="receip"
-            type="com.wjasinski.myapplication.model.Receip"/>
+            type="com.wjasinski.myapplication.model.Recipe"/>
     </data>
 
 
