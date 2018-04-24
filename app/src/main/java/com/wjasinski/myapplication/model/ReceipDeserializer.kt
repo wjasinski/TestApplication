@@ -23,7 +23,7 @@ class ReceipDeserializer : JsonDeserializer<List<Receip>> {
         for (receipObject in mainArray) {
             val receip = Receip()
             receip.title = receipObject.asJsonObject.get(TITLE).asString
-            receip.description = receipObject.asJsonObject.get(DESCRIPTION).asString
+            receip.description = receipObject.asJsonObject.get(DESCRIPTION).asString.replace("<br />", "")
             receip.imageUrl = parseImgUrl(receipObject.asJsonObject.get(IMAGES))
             receip.ingredientsNames = parseIngredientsNames(receipObject.asJsonObject.get(INGREDIENTS))
             list.add(receip)
