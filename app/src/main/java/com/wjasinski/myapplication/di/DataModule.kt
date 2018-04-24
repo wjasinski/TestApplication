@@ -1,7 +1,10 @@
 package com.wjasinski.myapplication.di
 
 import android.content.Context
+import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.wjasinski.myapplication.data.net.RestApi
 import com.wjasinski.myapplication.data.net.RestService
 import dagger.Module
@@ -16,6 +19,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 @Module
 public class DataModule {
@@ -27,18 +31,20 @@ public class DataModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(context: Context,
-                            logger: HttpLoggingInterceptor?): OkHttpClient {
+    fun provideGson(): Gson {
+        return GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create()
+    }
 
-        val httpCacheDirectory = File(context.cacheDir, "responses")
-        val cacheSize = 50 * 1024 * 1024L // 10 MiB
-        val cache = Cache(httpCacheDirectory, cacheSize)
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(logger: HttpLoggingInterceptor?): OkHttpClient {
 
         val builder = OkHttpClient.Builder()
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .connectTimeout(30, TimeUnit.SECONDS)
-                .cache(cache)
 
         if (logger != null) {
             builder.addInterceptor(logger)
